@@ -1,12 +1,9 @@
-
-
 let noteForm;
 let noteTitle;
 let noteText;
 let saveNoteBtn;
 let newNoteBtn;
 let noteList;
-
 
 if (window.location.pathname === "/notes") {
   noteForm = document.querySelector(".note-form");
@@ -17,7 +14,6 @@ if (window.location.pathname === "/notes") {
   clearBtn = document.querySelector(".clear-btn");
   noteList = document.querySelectorAll(".list-container .list-group");
 }
-
 
 // Show an element
 const show = (elem) => {
@@ -31,8 +27,8 @@ const hide = (elem) => {
 
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
-let allNotes = [];
 
+//API call to get the saved notes
 const getNotes = () =>
   fetch("/api/notes", {
     method: "GET",
@@ -46,7 +42,7 @@ const getNotes = () =>
       console.error("error", error);
     });
 
-
+//API post request to append a new note
 const saveNote = (note) =>
   fetch("/api/notes", {
     method: "POST",
@@ -54,10 +50,12 @@ const saveNote = (note) =>
       "Content-Type": "application/json",
     },
     body: JSON.stringify(note),
-  }).then((response) => response.json())
-  .then((data) => data)
-  .catch((error) => console.error(error))
+  })
+    .then((response) => response.json())
+    .then((data) => data)
+    .catch((error) => console.error(error));
 
+//API call to delete a note
 const deleteNote = (data, id) =>
   fetch(`/api/notes/${id}`, {
     method: "DELETE",
@@ -65,7 +63,10 @@ const deleteNote = (data, id) =>
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  });
+  })
+    .then((response) => response.json())
+    .then((data) => data)
+    .catch((error) => console.error(error));
 
 const renderActiveNote = () => {
   hide(saveNoteBtn);
@@ -90,7 +91,7 @@ const handleNoteSave = () => {
   const newNote = {
     title: noteTitle.value,
     text: noteText.value,
-    id: ""
+    id: "",
   };
 
   saveNote(newNote).then(() => {
@@ -111,15 +112,13 @@ const handleNoteDelete = (e) => {
     activeNote = {};
   }
 
-  getNotes().then((data) => deleteNote(data, noteId)).then(() => {
-    getAndRenderNotes();
-    renderActiveNote();
-  })
-
+  getNotes()
+    .then((data) => deleteNote(data, noteId))
+    .then(() => {
+      getAndRenderNotes();
+      renderActiveNote();
+    });
 };
-
-
-
 
 // Sets the activeNote and displays it
 const handleNoteView = (e) => {
@@ -149,7 +148,6 @@ const handleRenderBtns = () => {
 
 // Render the list of note titles
 const renderNoteList = async (notes) => {
-
   let jsonNotes = await notes;
   if (window.location.pathname === "/notes") {
     noteList.forEach((el) => (el.innerHTML = ""));

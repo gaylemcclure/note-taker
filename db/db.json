@@ -1,7 +1,12 @@
 [
     {
-        "title": "No more duplicate deleted",
-        "text": "only singles",
-        "id": "a53f816b-8fd3-4105-a71c-1e55fc7d04fd"
+        "title": "Go shopping",
+        "text": "buy milk",
+        "id": "705a23b5-cd56-44af-97f7-36e12e06883e"
+    },
+    {
+        "title": "Finish homework",
+        "text": "remember to deploy",
+        "id": "0d09ff93-6b26-46e7-b272-fc2c0e4af1ec"
     }
 ]

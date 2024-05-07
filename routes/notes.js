@@ -1,5 +1,4 @@
 const note = require('express').Router();
-const fs = require("fs");
 const { readAndAppend, readFromFile, writeToFile } = require('../helpers/fsUtils');
 const idGenerator = require('../helpers/idGenerator');
 
@@ -12,9 +11,8 @@ note.get('/', (req, res) =>
 
 // POST Route for adding a new note
 note.post('/', (req, res) => {
+  //calling the id function
   const generatedId = idGenerator();
-  console.log(generatedId)
-  // Destructuring the items in req.body
   const { title, text} = req.body;
 
   // If all the required properties are present
@@ -25,7 +23,6 @@ note.post('/', (req, res) => {
       text,
       id: generatedId
     };
-    console.log(newNote)
     //call the appendFile helper function
     readAndAppend(newNote, "./db/db.json");
 
