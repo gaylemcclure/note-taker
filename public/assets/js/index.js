@@ -1,4 +1,5 @@
 
+
 let noteForm;
 let noteTitle;
 let noteText;
@@ -16,10 +17,6 @@ if (window.location.pathname === "/notes") {
   clearBtn = document.querySelector(".clear-btn");
   noteList = document.querySelectorAll(".list-container .list-group");
 }
-
-const idGenerator = Math.floor((1 + Math.random()) * 0x10000)
-.toString(16)
-.substring(1);
 
 
 // Show an element
@@ -61,12 +58,13 @@ const saveNote = (note) =>
   .then((data) => data)
   .catch((error) => console.error(error))
 
-const deleteNote = (id) =>
+const deleteNote = (data, id) =>
   fetch(`/api/notes/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
+    body: JSON.stringify(data),
   });
 
 const renderActiveNote = () => {
@@ -92,7 +90,7 @@ const handleNoteSave = () => {
   const newNote = {
     title: noteTitle.value,
     text: noteText.value,
-    id: idGenerator
+    id: ""
   };
 
   saveNote(newNote).then(() => {
@@ -113,11 +111,15 @@ const handleNoteDelete = (e) => {
     activeNote = {};
   }
 
-  deleteNote(noteId).then(() => {
+  getNotes().then((data) => deleteNote(data, noteId)).then(() => {
     getAndRenderNotes();
     renderActiveNote();
-  });
+  })
+
 };
+
+
+
 
 // Sets the activeNote and displays it
 const handleNoteView = (e) => {
