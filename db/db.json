@@ -8,5 +8,10 @@
         "title": "Finish homework",
         "text": "remember to deploy",
         "id": "0d09ff93-6b26-46e7-b272-fc2c0e4af1ec"
+    },
+    {
+        "title": "Delete a note",
+        "text": "Delete this note",
+        "id": "debcef51-3434-4fec-810c-90e324645546"
     }
 ]
